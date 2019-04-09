@@ -1,0 +1,24 @@
+server:
+  port: 8899
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.94.197.35:3306/automobile?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false
+    username: root
+    password: 7BA08423545b
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+  http:
+  multipart:
+    max-file-size: 112500MB
+    max-request-size: 112500MB
+    maxFileSize: 112500MB
+    maxRequestSize: 112500MB
+    maxpostsize: -1
+  server:
+    tomcat:
+     max-http-post-size: -1
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*/*Mapper.xml

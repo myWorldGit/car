@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>提交汽车信息</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		/*图片上传*/
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+		}
+
+		.container {
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			clear: both;
+		}
+
+		.z_photo {
+			width: 5rem;
+			height: 5rem;
+			padding: 0.3rem;
+			overflow: auto;
+			clear: both;
+			margin: 1rem auto;
+			border: 1px solid #555;
+		}
+
+		.z_photo img {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.z_addImg {
+			float: left;
+			margin-right: 0.2rem;
+		}
+
+		.z_file {
+			width: 1rem;
+			height: 1rem;
+			background: url(/images/z_add.png) no-repeat;
+			background-size: 100% 100%;
+			float: left;
+			margin-right: 0.2rem;
+		}
+
+		.z_file input::-webkit-file-upload-button {
+			width: 1rem;
+			height: 1rem;
+			border: none;
+			position: absolute;
+			outline: 0;
+			opacity: 0;
+		}
+
+		.z_file input#file {
+			display: block;
+			width: auto;
+			border: 0;
+			vertical-align: middle;
+		}
+		/*遮罩层*/
+
+		.z_mask {
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, .5);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			display: none;
+		}
+
+		.z_alert {
+			width: 3rem;
+			height: 2rem;
+			border-radius: .2rem;
+			background: #fff;
+			font-size: .24rem;
+			text-align: center;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -1.5rem;
+			margin-top: -2rem;
+		}
+
+		.z_alert p:nth-child(1) {
+			line-height: 1.5rem;
+		}
+
+		.z_alert p:nth-child(2) span {
+			display: inline-block;
+			width: 49%;
+			height: .5rem;
+			line-height: .5rem;
+			float: left;
+			border-top: 1px solid #ddd;
+		}
+
+		.z_cancel {
+			border-right: 1px solid #ddd;
+		}
+
+	</style>
+	<style>
+		img {
+			border: 0;
+		}
+
+		body {
+			background: #f7f7f7;
+			color: #666;
+			font: 12px/150% Arial,Verdana, "microsoft yahei";
+		}
+
+		html, body, div, dl, dt, dd, ol, ul, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, button, fieldset, form, input, legend, textarea, th, td {
+			margin: 0;
+			padding: 0;
+		}
+
+		article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary {
+			display: block;
+			margin: 0;
+			padding: 0;
+		}
+
+		audio,canvas,progress,video {
+			display: inline-block;
+			vertical-align: baseline;
+		}
+
+		a {
+			text-decoration: none;
+			color: #08acee;
+		}
+
+		a:active,a:hover {
+			outline: 0;
+		}
+
+		button {
+			outline: 0;
+		}
+
+		mark {
+			color: #000;
+			background: #ff0;
+		}
+
+		small {
+			font-size: 80%;
+		}
+
+		img {
+			border: 0;
+		}
+
+		button,input,optgroup,select,textarea {
+			margin: 0;
+			font: inherit;
+			color: inherit;
+			outline: none;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		i {
+			font-style: normal;
+		}
+
+		a {
+			color: #666;
+		}
+
+		a:hover {
+			color: #eee;
+		}
+
+		em {
+			font-style: normal;
+		}
+
+		h2, h3 {
+			font-family: "microsoft yahei";
+			font-weight: 100;
+		}
+
+
+
+		/* ------------------- */
+		::-moz-placeholder {
+			color: #9fa3a7;
+		}
+
+		::-webkit-input-placeholder {
+			color: #9fa3a7;
+		}
+
+		:-ms-input-placeholder {
+			color: #9fa3a7;
+		}
+
+
+		.pc-kk-form{
+			padding:15px 20px;
+		}
+		.pc-kk-form-list{
+			background:#fff;
+			border:1px solid #e5e5e5;
+			border-radius:5px;
+			height:44px;
+			line-height:44px;
+			margin-bottom:10px;
+		}
+		.pc-kk-form-list input{
+			width:100%;
+			border:none;
+			background:none;
+			color:#9fa3a7;
+			font-size:14px;
+			height: 36px;
+			padding: 4px 10px;
+		}
+		.pc-kk-form-list textarea{
+			background:none;
+			border:none;
+			height:60px;
+			padding:10px;
+			resize:none;
+			width:94%;
+			line-height:22px;
+			color:#9fa3a7;
+			font-size:14px;
+		}
+		.nice-select{
+			position: relative;
+			background: #fff url(images/a2.jpg) no-repeat right center;
+			background-size:18px;
+			width:47%;
+			float:left;
+			border:1px solid #e5e5e5;
+			border-radius:5px;
+			height:44px;
+			line-height:44px;
+		}
+
+		.nice-select ul{
+			width: 100%;
+			display: none;
+			position: absolute;
+			left: -1px;
+			top: 44px;
+			overflow: hidden;
+			background-color: #fff;
+			max-height: 150px;
+			overflow-y: auto;
+			border: 1px solid #b9bcbf;
+			z-index: 9999;
+			border-radius:5px;
+
+		}
+		.nice-select ul li{
+			padding-left:10px;
+		}
+		.nice-select ul li:hover{
+			background:#f8f4f4;
+		}
+		.pc-kk-form-list-clear{
+			background:none;
+			border:none;
+		}
+		.pc-kk-form-btn p{
+			background:#ec5224;
+			color:#fff;
+			border:none;
+			width:100%;
+			height:50px;
+			line-height:50px;
+			font-size:16px;
+			border-radius:50px;
+		}
+	</style>
+</head>
+<body>
+<a align="center" href="/gocar/carList">返回</a>
+<div class="pc-kk-form">
+		<form method="post" action="/car/carAdd" id="exeriseForm" class="exeriseForm" enctype="multipart/form-data" >
+			<div style="color: red">汽车名称</div>
+
+			<div class="pc-kk-form-list">
+				<input type="text" th:value="${session?.carDemo?.get('carName')}" name="carName" placeholder="汽车名称">
+			</div>
+			<div style="color: red">排量------行驶公里</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input type="text" th:value="${session?.carDemo?.get('carLetout')}" name="carLetout" placeholder="排量(L)" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="text"  th:value="${session?.carDemo?.get('carTravel')}" name="carTravel" placeholder="行驶纪录(公里)" >
+				</div>
+			</div>
+			<div style="color: red">原价------现价</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input th:value="${session?.carDemo?.get('carPrice')}" type="number" name="carPrice" placeholder="原价(万)" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="number" th:value="${session?.carDemo?.get('carTist')}" name="carTist" placeholder="现价(万)" >
+					<input type="text" name="carID" th:value="${session?.carDemo?.get('carID')}" hidden="hidden">
+				</div>
+			</div>
+			<div style="color: red">售车地址------联系电话</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input type="text" th:value="${session?.carDemo?.get('carSite')}" name="carSite" placeholder="发售地址" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="text" th:value="${session?.carDemo?.carPhone}" name="carPhone" placeholder="联系电话" >
+				</div>
+			</div>
+			<div style="color: red">是否自动挡------品牌</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<select name="carState" style="height: 50px;width:170px;">
+						<div th:if="${session?.carDemo?.get('carState')==1}">
+							<option selected="selected"  value="1">是</option>
+							<option  value="0">否</option>
+						</div>
+						<div th:if="${session?.carDemo?.get('carState')!=1}">
+							<option  value="1">是</option>
+							<option selected="selected" value="0">否</option>
+						</div>
+					</select>
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<select name="carBrandID" style="height: 50px;width:170px;">
+						<div th:each="carList:${session.carBrandList}">
+							<div th:if="${session?.carDemo?.get('carBrandID')==carList.carBrandID}">
+								<option selected="selected" th:value="${carList.carBrandID}">[[${carList.carBrandName}]]</option>
+							</div>
+							<div th:if="${session?.carDemo?.get('carBrandID')!=carList.carBrandID}">
+								<option  th:value="${carList.carBrandID}">[[${carList.carBrandName}]]</option>
+							</div>
+						</div>
+					</select>
+				</div>
+			</div>
+			<div class="pc-kk-form-list" style="height:auto">
+				<textarea name="carDetails" th:text="${session?.carDemo?.get('carDetails')}" placeholder="汽车详情介绍"></textarea>
+			</div>
+
+			<div class="container">
+				<!--&lt;!&ndash;    照片添加    &ndash;&gt;
+				<div class="z_photo">
+					<div class="z_file">
+						<input   type="file" name="file" multiple="multiple" id="file"  accept="image/*"  onchange="imgChange('z_photo','z_file');" />
+					</div>
+				</div>
+				</div>-->
+
+				<!--遮罩层-->
+				<div class="z_mask">
+					<!--弹出框-->
+					<div class="z_alert" >
+						<p>确定要删除这张图片吗？</p>
+						<p>
+							<span class="z_cancel">取消</span>
+							<span class="z_sure">确定</span>
+						</p>
+					</div>
+				</div>
+			</div >
+			<div  class="pc-kk-form-btn">
+				<p   align="center" onclick="tij()" ><span>提交</span></p>
+               <br>
+                <p   align="center" onclick="deletecarid()" ><span>删除</span></p>
+
+			</div>
+		</form>
+	</div >
+	<script type="text/javascript">
+        //px转换为rem
+        function deletecarid() {
+            if (confirm('确定删除吗??')){
+                $.ajax({
+                    url:"/gocar/deletecarID",
+                    data:{"carID":$("[name=carID]").val()},
+                    type:"POST",
+                    success:function (ddd) {
+                        if (ddd=="error"){
+                            alert("删除异常");
+                        } else if (ddd=="success") {
+                            alert("删除成功!");
+                            location.href="/gocar/carList";
+                        }
+                    },error:function () {
+                        alert("服务器迷路了!")
+                    }
+                })
+            }
+
+        }
+
+        (function(doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function() {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 640) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                    }
+                };
+
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+
+        $(function () {
+           // var message = [[${session.carDemo.carImges}]];
+            alert("1");
+        })
+        function imgChange(obj1, obj2) {
+            //获取点击的文本框
+            var file = document.getElementById("file");
+            //存放图片的父级元素
+            var imgContainer = document.getElementsByClassName(obj1)[0];
+            //获取的图片文件
+            var fileList = file.files;
+            //文本框的父级元素
+            var input = document.getElementsByClassName(obj2)[0];
+            var imgArr = [];
+            //遍历获取到得图片文件
+            for (var i = 0; i < fileList.length; i++) {
+                var imgUrl = window.URL.createObjectURL(file.files[i]);
+                imgArr.push(imgUrl);
+                var img = document.createElement("img");
+                img.setAttribute("src", imgArr[i]);
+                var imgAdd = document.createElement("div");
+                imgAdd.setAttribute("class", "z_addImg");
+                imgAdd.appendChild(img);
+                imgContainer.appendChild(imgAdd);
+            };
+            imgRemove();
+        };
+
+        function imgRemove() {
+            var imgList = document.getElementsByClassName("z_addImg");
+            var mask = document.getElementsByClassName("z_mask")[0];
+            var cancel = document.getElementsByClassName("z_cancel")[0];
+            var sure = document.getElementsByClassName("z_sure")[0];
+            for (var j = 0; j < imgList.length; j++) {
+                imgList[j].index = j;
+                imgList[j].onclick = function() {
+                    var t = this;
+                    mask.style.display = "block";
+                    cancel.onclick = function() {
+                        mask.style.display = "none";
+                    };
+                    sure.onclick = function() {
+                        mask.style.display = "none";
+                        t.remove();
+                    };
+
+                }
+            };
+        };
+
+	</script>
+
+	<script type="text/javascript" th:src="@{/js/jquery-2.2.4.min.js}"></script>
+
+	<script>
+        $('[name="nice-select"]').click(function(e){
+
+            $('[name="nice-select"]').find('ul').hide();
+
+            $(this).find('ul').show();
+
+            e.stopPropagation();
+
+        });
+
+        $('[name="nice-select"] li').hover(function(e){
+
+            $(this).toggleClass('on');
+
+            e.stopPropagation();
+
+        });
+
+        $('[name="nice-select"] li').click(function(e){
+
+            var val = $(this).text();
+
+            $(this).parents('[name="nice-select"]').find('input').val(val);
+
+            $('[name="nice-select"] ul').remove();
+
+            e.stopPropagation();
+
+        });
+
+        $(document).click(function(){
+            $('[name="nice-select"] ul').remove();
+
+        });
+			function tij(){
+                // var formData = new FormData(document.getElementById("exeriseForm"));
+                // var imgg = [];
+                // imgg = $('.z_addImg img');
+                // var imgSrc = [];
+                // var imgBase64 = [];
+                // for (var i = 0; i < imgg.length; i++) {
+                //     if (imgg[i].src != 'undefined') {
+                //         imgSrc.push(imgg[i].src); var image = new Image();
+                //         image.src = imgg[i].src;
+                //         var base64 = getBase64Image(image);
+                //         imgBase64.push(base64);
+                //         formData.append("imageName", base64.split(',')[1]);
+                //     }
+                // }
+                // //location.href="/car/carAdd?imageName="+formData;
+                var formData = new FormData(document.getElementById("exeriseForm"));
+				$.ajax({
+                    url: "/gocar/carupload",
+                    type: "POST",
+                    data: formData,
+					dateType:"json",
+                    processData: false,  // 告诉jQuery不要去处理发送的数据
+                    contentType: false,
+					error:function () {
+                    },success:function (data) {
+						if (data=="1"){
+						    alert("修改成功!");
+						    location.href="/gocar/carList";
+						} else{
+						    alert("修改失败!")
+						}
+                    }
+					// 告诉jQuery不要去设置Content-Type请求头
+                });
+			}
+		/*function getBase64Image(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+            var dataURL = canvas.toDataURL("image/"+ext);
+            return dataURL;
+        }*/
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>二手车-列表</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/header.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/iconfont.css}">
+</head>
+
+<body style="padding:4rem 0 3rem 0;">
+<div class="list_search">
+	<div class="search_box">
+        <input class="search_text" placeholder="快速搜索您需要的车" id="aa">
+          <button class="search_btn" onclick="as()">
+            <i class="icon iconfont icon-search fc8"></i>
+          </button>
+    </div>
+</div>
+<div class="sort_box pt1 pb1 nav_sort bb1" id="nav_sort">
+  <ul class="clearfix" id="classTags">
+    <li class="nav-item" onclick="classTag('container0',this,0)">
+      汽车品牌
+      <i class=""></i>
+    </li>
+    <li class="nav-item" onclick="classTag('container1',this,1)">
+      价格
+      <i class=""></i>
+    </li>
+    <li class="nav-item" onclick="classTag('container2',this,2)">
+      车型
+      <i class=""></i>
+    </li>
+    <li class="nav-item" onclick="classTag('container3',this,3)">
+      排序
+      <i class=""></i>
+    </li>
+  </ul>
+</div>
+<div class="dropdown" style="display:none;">
+  <div class="dropdown_box" id="container0" >
+    <h3 class="sortNav_item pl1" data-index="*">*</h3>
+    <ul class="dropdown_list carClass pl1">
+      <li><a href="#">不限品牌</a></li>
+    </ul>
+    <ul class="dropdown_list carClass carLogo pl1">
+      <li th:each="a:${session.carbrand}">
+        <img th:src="@{'http://www.1jia1hczm.com//'+${a.carBrandImges}}" class="dl_img">
+        <a href="#"  id="carname" th:onclick="b([[${a.carBrandID}]])">[[${a.carBrandName}]]</a>
+      </li>
+    </ul>
+
+  </div>
+  <div class="dropdown_box" id="container1">
+    <ul class="dropdown_list carPrice clearfix">
+      <li><a th:onclick="c(5)">5万以下</a></li>
+      <li><a th:onclick="c(10)">5万-10万</a></li>
+      <li><a th:onclick="c(20)">10万-20万</a></li>
+      <li><a th:onclick="c(50)">20万-50万</a></li>
+      <li><a href="#">12万-15万</a></li>
+      <li><a href="#">15万以上</a></li>
+    </ul>
+  </div>
+  <div class="dropdown_box" id="container2">
+    <ul class="dropdown_list carClass pl1">
+      <li><a href="#">两厢轿车</a></li>
+      <li><a href="#">三厢轿车</a></li>
+      <li><a href="#">跑车</a></li>
+      <li><a href="#">SUV</a></li>
+      <li><a href="#">MPV</a></li>
+    </ul>
+  </div>
+  <div class="dropdown_box" id="container3" >
+    <ul class="dropdown_list carClass pl1">
+      <li><a href="#" onclick="zuid(2)">价格最低</a></li>
+      <li><a href="#" onclick="zuiga(2)">价格最高</a></li>
+      <li><a href="#" onclick="zuidua(2)">车龄最短</a></li>
+      <li><a href="#" onclick="zuisha(2)">里程最少</a></li>
+    </ul>
+  </div>
+ <div class="dropdown_bg"></div>
+</div>
+<div class="sort_selected clearfix">
+  <div onclick="dianji('1')" class="s_selected_cont"><span id="container0_s"></span><i class="delete">x</i></div>
+  <div onclick="dianji('2')" class="s_selected_cont"><span id="container1_s"></span><i class="delete">x</i></div>
+  <div onclick="dianji('3')" class="s_selected_cont"><span id="container2_s"></span><i class="delete">x</i></div>
+  <div onclick="dianji('4')" class="s_selected_cont"><span id="container3_s"></span><i class="delete">x</i></div>
+
+</div>
+<div  class="hot_box mt1 pt1">
+  <div class="good_list" id="div">
+    <div class="good_mian" th:each="a:${session?.lists}" >
+      <a th:href="@{|/xq?cid=${a?.get('carID')}|}">
+        <div  class="good_img fl"><img th:src="${a?.get('carImges')}"></div>
+        <div class="good_cont pl08 ml9">
+          <h4 class="good_name fc3" th:text="${a?.get('carName')}"></h4>
+          <!--<p class="good_descript fc8"><span th:text="${a.carApply}"></span>|<span th:text="${a.carTravel}"></span></p>-->
+          <div class="good_price" th:text="${a?.get('carTist')}"></div>
+        </div>
+      </a>
+    </div>
+    <div>
+
+    </div>
+
+  </div>
+
+</div>
+<div align="center" id="fanfan">
+  <a align='center'  href='#' onclick='fy(2)'>加载更多</a>
+</div>
+<footer>
+
+</footer>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/amazeui.js}"></script>
+<script th:src="@{/js/list.js}"></script>
+<script>
+// function classTag(showContent,selfObj,k){
+//     alert(showContent+"@@@@");
+// 	var kk="#"+showContent;
+// 	alert(kk+"!!!!");
+// 	var show = $(kk).css("display");
+// 	console.log(show);
+// 	if(show == "none"){
+// 	    alert("if");
+// 		$(kk).show();
+// 		$(kk).siblings(".dropdown_box").hide();
+// 		$(".dropdown").show();
+// 		$(".nav-item").removeClass("curr");
+// 		$(selfObj).addClass("curr");
+// 	}else{
+//         alert("else");
+// 		$(".nav-item").removeClass("curr");
+// 		$(kk).hide();
+// 		$(".dropdown").hide();
+// 	}
+// }
+//
+//
+//    $(".dropdown_list li a").click(function(){
+//		var xx = $(this).parents(".dropdown_box").attr("id");
+//		var ss = $(".sort_selected").css("display");
+//		if(ss == "none"){
+//			$(".sort_selected").show();
+//			$("#"+xx+"_s").text($(this).text());
+//			$("#"+xx+"_s").parents(".s_selected_cont").show();
+//			}
+//		else{
+//			$("#"+xx+"_s").text($(this).text());
+//			$("#"+xx+"_s").parents(".s_selected_cont").show();
+//			};
+//		$(".dropdown").hide();
+//		$(".nav-item").removeClass("curr");
+//	})
+//
+//	$(".s_selected_cont").click(function(){
+//	  var u=0;
+//	   var sscLength = $(this).parent().children(".s_selected_cont").length;
+//	   for(var i=0 ; i<sscLength; i++){
+//
+//			var dd = $(".s_selected_cont").eq(i).css("display");
+//		   if(dd == "block"){
+//			   u+=1;
+//			 }
+//
+//		 }
+//		if(u == 1){
+//			$(this).hide();
+//			$(".sort_selected").hide();
+//			}
+//		else{
+//			$(this).hide();
+//			}
+//
+//		})
+  var aaa;
+  var names;
+  var moneys;
+  var zuidi="1";
+  var zuigao="1";
+  var zuiduan="1";
+  var zuishao="1";
+  var size="";
+  var count=5;
+  function as() {
+      aaa=$("#aa").val();
+      size="";
+      f();
+  }
+  function b(name) {
+      size="";
+
+    names=name;
+      f();
+  }
+  function c(money){
+      size="";
+      moneys=money;
+      f();
+  }
+  function zuid(a) {
+      size="";
+      zuigao="1";
+      zuiduan="1";
+      zuishao="1";
+      zuidi=a;
+      f();
+  }
+  function zuiga(a) {
+      size="";
+      zuidi="1";
+      zuiduan="1";
+      zuishao="1";
+      zuigao=a;
+      f();
+  }
+  function zuidua(a) {
+      size="";
+      zuidi="1";
+      zuigao="1";
+      zuishao="1";
+      zuiduan=a;
+
+      f();
+  }
+  function zuisha(a) {
+      size="";
+      zuidi="1";
+      zuigao="1";
+      zuiduan="1";
+      zuishao=a;
+      f();
+  }
+  function fy(aa) {
+      size=aa;
+      e();
+  }
+  $(function(){
+      if ([[${session.get('status')}]]=="11"){
+          f();
+      }
+  })
+  function f() {
+      $.ajax({
+          type:"post",
+          url:"/find",
+          data:{"aaa":aaa,"name":names,"moneys":moneys,"zuidi":zuidi,"zuigao":zuigao,"zuiduan":zuiduan,"zuishao":zuishao,"size":size,"count":count},
+          dataType:"json",
+          success:function (data) {
+              $("[id=div]").html('');
+             var th="";
+              $(data.list).each(function (a,k) {
+                  th+="<div class='good_mian'>";
+                  th+="<a href='/xq?cid="+k.carID+"'>";
+                  th+="<div class='good_img fl'><img src=http://www.1jia1hczm.com//"+k.carImges+"></div>";
+                  th+="<div class='good_cont pl08 ml9'><h4 class='good_name fc3'>"+k.carName+"</h4><p class='good_descript fc8'><span>"+k.carApply+"</span>|<span>"+k.carTravel+"</span></p></div>";
+                  th+="<div class='good_price'>"+k.carTist+"</div>";
+                  th+="</a></div>"
+              })
+              $("#fanfan").html('');
+              if (data.list==null||data.list==""){
+                  var fan="<p >已经加载全部</p>";
+              }else{
+                  var fan="<a align='center'  href='#' onclick='fy("+data.size+")'>加载更多</a>"
+              }
+              $("#fanfan").html(fan);
+              $("[id=div]").append(th);
+          }
+      })
+  }
+
+      function  dianji(aa) {
+          var pinpai=$("[id=container0_s]").html();
+          var jiage=$("[id=container1_s]").html();
+          var paixu=$("[id=container3_s]").html();
+          switch (aa) {
+              case "1":
+                  if(pinpai!=null&&pinpai!=""){
+                      $("[id=container0_s]").html('')
+                      names="";
+                  }break;
+              case "2":
+                  if(jiage!=null&&pinpai!=""){
+                  $("[id=container1_s]").html('')
+                  moneys="";
+                   }break;
+              case "4":
+                  if(paixu!=null&&paixu!=""){
+                  zuidi="1";
+                  zuigao="1";
+                  zuiduan="1";
+                  zuishao="1";
+                  $("[id=container3_s]").html('');
+              }break;
+          }
+          f();
+               }
+
+               function e(){
+                   $.ajax({
+                       type:"post",
+                       url:"/find",
+                       data:{"aaa":aaa,"name":names,"moneys":moneys,"zuidi":zuidi,"zuigao":zuigao,"zuiduan":zuiduan,"zuishao":zuishao,"size":size,"count":count},
+                       dataType:"json",
+                       success:function (data) {
+                           var th="";
+                           $(data.list).each(function (a,k) {
+                               th+="<div class='good_mian'>";
+                               th+="<a href='/xq?cid="+k.carID+"'>";
+                               th+="<div class='good_img fl'><img src=http://www.1jia1hczm.com//"+k.carImges+"></div>";
+                               th+="<div class='good_cont pl08 ml9'><h4 class='good_name fc3'>"+k.carName+"</h4><p class='good_descript fc8'><span>"+k.carApply+"</span>|<span>"+k.carTravel+"</span></p></div>";
+                               th+="<div class='good_price'>"+k.carTist+"</div>";
+                               th+="</a></div>"
+                           })
+                           $("#fanfan").html('');
+                           if (data.list==null||data.list==""){
+                               var fan="<p >已经加载全部</p>";
+                           }else{
+                               var fan="<a align='center'  href='#' onclick='fy("+data.size+")'>加载更多</a>"
+                           }
+                           $("#fanfan").html(fan);
+                           $("[id=div]").append(th);
+                           var h = $(document).height()-$(window).height();
+                           $(document).scrollTop(h);
+                       }
+                   })
+               }
+</script>
+</body>
+</html>

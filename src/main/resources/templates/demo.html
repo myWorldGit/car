@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1, minimum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+	<link rel="stylesheet" type="text/css" th:href="@{/style/dialog.css}">
+	<script th:src="@{/js/auto-size.js}"></script><!--设置字体大小-->
+
+	<script th:src="@{/js/zepto.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/dialog.min.js}"></script>
+
+
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/myworld-demo-extends.css}">
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		/*图片上传*/
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+		}
+
+		.container {
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			clear: both;
+		}
+
+		.z_photo {
+			width: 5rem;
+			height: 5rem;
+			padding: 0.3rem;
+			overflow: auto;
+			clear: both;
+			margin: 1rem auto;
+			border: 1px solid #555;
+		}
+
+		.z_photo img {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		.z_addImg {
+			float: left;
+			margin-right: 0.2rem;
+		}
+
+		.z_file {
+			width: 1rem;
+			height: 1rem;
+			background: url(/images/z_add.png) no-repeat;
+			background-size: 100% 100%;
+			float: left;
+			margin-right: 0.2rem;
+		}
+
+		.z_file input::-webkit-file-upload-button {
+			width: 1rem;
+			height: 1rem;
+			border: none;
+			position: absolute;
+			outline: 0;
+			opacity: 0;
+		}
+
+		.z_file input#file {
+			display: block;
+			width: auto;
+			border: 0;
+			vertical-align: middle;
+		}
+		/*遮罩层*/
+
+		.z_mask {
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, .5);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			display: none;
+		}
+
+		.z_alert {
+			width: 3rem;
+			height: 2rem;
+			border-radius: .2rem;
+			background: #fff;
+			font-size: .24rem;
+			text-align: center;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			margin-left: -1.5rem;
+			margin-top: -2rem;
+		}
+
+		.z_alert p:nth-child(1) {
+			line-height: 1.5rem;
+		}
+
+		.z_alert p:nth-child(2) span {
+			display: inline-block;
+			width: 49%;
+			height: .5rem;
+			line-height: .5rem;
+			float: left;
+			border-top: 1px solid #ddd;
+		}
+
+		.z_cancel {
+			border-right: 1px solid #ddd;
+		}
+
+	</style>
+	<style>
+		img {
+			border: 0;
+		}
+
+		body {
+			background: #f7f7f7;
+			color: #666;
+			font: 12px/150% Arial,Verdana, "microsoft yahei";
+		}
+
+		html, body, div, dl, dt, dd, ol, ul, li, h1, h2, h3, h4, h5, h6, p, blockquote, pre, button, fieldset, form, input, legend, textarea, th, td {
+			margin: 0;
+			padding: 0;
+		}
+
+		article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary {
+			display: block;
+			margin: 0;
+			padding: 0;
+		}
+
+		audio,canvas,progress,video {
+			display: inline-block;
+			vertical-align: baseline;
+		}
+
+		a {
+			text-decoration: none;
+			color: #08acee;
+		}
+
+		a:active,a:hover {
+			outline: 0;
+		}
+
+		button {
+			outline: 0;
+		}
+
+		mark {
+			color: #000;
+			background: #ff0;
+		}
+
+		small {
+			font-size: 80%;
+		}
+
+		img {
+			border: 0;
+		}
+
+		button,input,optgroup,select,textarea {
+			margin: 0;
+			font: inherit;
+			color: inherit;
+			outline: none;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		i {
+			font-style: normal;
+		}
+
+		a {
+			color: #666;
+		}
+
+		a:hover {
+			color: #eee;
+		}
+
+		em {
+			font-style: normal;
+		}
+
+		h2, h3 {
+			font-family: "microsoft yahei";
+			font-weight: 100;
+		}
+
+
+
+		/* ------------------- */
+		::-moz-placeholder {
+			color: #9fa3a7;
+		}
+
+		::-webkit-input-placeholder {
+			color: #9fa3a7;
+		}
+
+		:-ms-input-placeholder {
+			color: #9fa3a7;
+		}
+
+
+		.pc-kk-form{
+			padding:15px 20px;
+		}
+		.pc-kk-form-list{
+			background:#fff;
+			border:1px solid #e5e5e5;
+			border-radius:5px;
+			height:44px;
+			line-height:44px;
+			margin-bottom:10px;
+		}
+		.pc-kk-form-list input{
+			width:100%;
+			border:none;
+			background:none;
+			color:#9fa3a7;
+			font-size:14px;
+			height: 36px;
+			padding: 4px 10px;
+		}
+		.pc-kk-form-list textarea{
+			background:none;
+			border:none;
+			height:60px;
+			padding:10px;
+			resize:none;
+			width:94%;
+			line-height:22px;
+			color:#9fa3a7;
+			font-size:14px;
+		}
+		.nice-select{
+			position: relative;
+			background: #fff url(images/a2.jpg) no-repeat right center;
+			background-size:18px;
+			width:47%;
+			float:left;
+			border:1px solid #e5e5e5;
+			border-radius:5px;
+			height:44px;
+			line-height:44px;
+		}
+
+		.nice-select ul{
+			width: 100%;
+			display: none;
+			position: absolute;
+			left: -1px;
+			top: 44px;
+			overflow: hidden;
+			background-color: #fff;
+			max-height: 150px;
+			overflow-y: auto;
+			border: 1px solid #b9bcbf;
+			z-index: 9999;
+			border-radius:5px;
+
+		}
+		.nice-select ul li{
+			padding-left:10px;
+		}
+		.nice-select ul li:hover{
+			background:#f8f4f4;
+		}
+		.pc-kk-form-list-clear{
+			background:none;
+			border:none;
+		}
+		.pc-kk-form-btn p{
+			background:#ec5224;
+			color:#fff;
+			border:none;
+			width:100%;
+			height:50px;
+			line-height:50px;
+			font-size:16px;
+			border-radius:50px;
+		}
+	</style>
+</head>
+<body>
+
+<button class="text-center text-warning btn btn-danger btn-block" onClick="javascript :history.back(-1)">返回</button>
+<div class="modal fade" id="loading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop='static'>
+    <div style="width: 200px;height:20px; z-index: 20000; position: absolute; text-align: center; left: 50%; top: 50%;margin-left:-100px;margin-top:-10px">
+        <div class="progress progress-striped active" style="margin-bottom: 0;">
+            <div class="progress-bar" style="width: 100%;"></div>
+        </div>
+        <h5 style="color:black"> <strong>信息正在提交请稍等</strong> </h5>
+    </div>
+</div>
+<div class="pc-kk-form">
+		<form method="post" action="/car/carAdd" id="exeriseForm" class="exeriseForm" enctype="multipart/form-data" >
+			<div class="pc-kk-form-list">
+				<input type="text" name="carName" placeholder="汽车名称">
+			</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input type="text" name="carLetout" placeholder="排量(L)" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="text" name="carTravel" placeholder="行驶纪录(公里)" >
+				</div>
+			</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input type="text" name="carPrice" placeholder="原价(万)" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="text" name="carTist" placeholder="现价(万)" >
+				</div>
+			</div>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select">
+					<input type="text" name="carSite" placeholder="发售地址" >
+				</div>
+				<div class="nice-select" name="nice-select" style="float:right">
+					<input type="text" name="carPhone" placeholder="联系电话" >
+				</div>
+			</div>
+			<span style="color: red">品牌-----是否自动挡</span>
+			<div class="pc-kk-form-list pc-kk-form-list-clear">
+				<div class="nice-select" name="nice-select" style="float:right">
+					<select name="carState" style="height: 50px;width:170px;">
+						<option value="0">是</option>
+						<option value="1">否</option>
+					</select>
+				</div>
+				<div class="nice-select" name="nice-select">
+					<select onmousedown="javascript:return false;" id="selectBySort" name="carBrandID" style="height: 50px;width:170px;">
+						<div th:each="carList:${session.carBrandList}">
+							<option th:value="${carList.carBrandID}">[[${carList.carBrandName}]]</option>
+						</div>
+					</select>
+				</div>
+			</div>
+			<div class="pc-kk-form-list" style="height:auto">
+				<textarea name="carDetails" placeholder="汽车详情介绍"></textarea>
+			</div>
+
+			<div class="container">
+				<!--    照片添加    -->
+				<div class="z_photo">
+					<div class="z_file">
+						<input   type="file" name="file" multiple="multiple" id="file"  accept="image/*"  onchange="imgChange('z_photo','z_file');" />
+					</div>
+				</div>
+				</div>
+
+				<!--遮罩层-->
+				<div class="z_mask">
+					<!--弹出框-->
+					<div class="z_alert" >
+						<p>确定要删除这张图片吗？</p>
+						<p>
+							<span class="z_cancel">取消</span>
+							<span class="z_sure">确定</span>
+						</p>
+					</div>
+				</div>
+			<div  class="pc-kk-form-btn">
+			<div  class="pc-kk-form-btn">
+				<p   align="center" onclick="tij()" ><span>提交</span></p>
+
+			</div>
+		</form>
+	</div >
+
+	<div id="select-modal"  class="">
+		<div class="my-modal-wrap">
+			<div class="word-btn-group">
+				<p>A</p>
+				<p>B</p>
+				<p>C</p>
+				<p>D</p>
+				<p>F</p>
+				<p>G</p>
+				<p>H</p>
+				<p>I</p>
+				<p>G</p>
+				<p>K</p>
+				<p>L</p>
+				<p>M</p>
+				<p>N</p>
+				<p>O</p>
+				<p>P</p>
+				<p>Q</p>
+				<p>R</p>
+				<p>S</p>
+				<p>T</p>
+				<p>U</p>
+				<p>V</p>
+				<p>W</p>
+				<p>X</p>
+				<p>Y</p>
+				<p>Z</p>
+
+			</div>
+			<div class="my-modal-body">
+				<ul class="list-group" id="select-list">
+				</ul>
+			</div>
+			<div class="modal-btn-group clearfix">
+
+				<div class="col-xs-12  text-center" >
+					<button id="noBtn" class="btn btn-danger btn-block">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+<script th:inline="javascript" >
+
+
+
+    $('#noBtn').click(function () {
+        $('#select-modal').fadeOut(600);
+    })
+    var list = [[${session.carBrandList}]];
+    var selectDom  = document.getElementById('selectBySort')
+	selectDom.addEventListener('click',function (ev) {
+		$('#select-modal').fadeIn(600);
+	})
+     var dictionary  = new Map();  //分组字典
+	 for(var i=0;i<list.length;i++){
+      	setByGroup(dictionary ,list[i]);
+	 }
+	 function setByGroup(dic,item) {
+	 	var listGroup = dic.get(item.carBrandKey);
+	 	if(listGroup===undefined){
+	 	    dic.set(item.carBrandKey,[item])
+	 	}else {
+             listGroup.push(item);
+             dic.set(item.carBrandKey,listGroup)
+	 	}
+	 }
+    var dicList =[];
+	 for(d of  dictionary){
+	     dicList.push(d);
+	 }
+	 dicList.sort(function(a,b){
+	     if(a[0]>b[0]){
+	         return 1;
+		 }else if(a[0]<b[0]) {
+	         return -1;
+		 }
+         return 1;
+	 })
+	 console.log(dicList);
+
+	 for(wordItem of dicList) {
+         for (items of wordItem) {
+             if (!Array.isArray(items)) {
+                 addSelectItem(items, '', '', true);
+             } else {
+                 for (var i = 0; i < items.length; i++) {
+                     addSelectItem(items[i].carBrandName, items[i].carBrandID,
+                         items[i].carBrandImges, false);
+                 }
+
+             }
+         }
+     }
+    function addSelectItem(text, value, img, isWorld) {
+        var listDom  = document.getElementById('select-list');
+        var li = document.createElement('li');
+             if(isWorld){
+                 $(li).addClass('list-group-item my-word-item')
+                 li.innerText=text;
+                 listDom.appendChild(li);
+			 }else {
+                 li.classList=['list-group-item'];
+                 var spanDom= document.createElement('span');
+                 spanDom.innerText =text;
+                 var imgDom = document.createElement('img');
+			     $(imgDom).addClass('car-icon-sizing');
+                 imgDom.src='http://www.1jia1hczm.com/'+img;
+                 li.appendChild(imgDom);
+                 li.appendChild(spanDom);
+                 li.value=value;
+                 li.before(2)
+                 listDom.appendChild(li);
+			 }
+         }
+    $('#select-list li').not('.my-word-item').click(function () {
+        $('#selectBySort')[0].value=this.value;
+        $('#select-modal').fadeOut(600);
+    })
+    $('.word-btn-group p').click(function() {
+        var $wordDom = $("#select-list .my-word-item:contains("+this.innerText+")");
+		if($wordDom.length==0){
+		    return;
+		}else {
+            var offsetTop =$('.my-modal-body').offset().top
+            $('.my-modal-body').scrollTop(0);
+            $('.my-modal-body').scrollTop($wordDom.offset().top-offsetTop);
+		}
+    })
+
+</script>
+<script type="text/javascript">
+    //px转换为rem
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if (clientWidth >= 640) {
+                    docEl.style.fontSize = '100px';
+                } else {
+                    docEl.style.fontSize = 100 * (clientWidth / 640) + 'px';
+                }
+            };
+
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+
+    function imgChange(obj1, obj2) {
+        //获取点击的文本框
+        var file = document.getElementById("file");
+        //存放图片的父级元素
+        var imgContainer = document.getElementsByClassName(obj1)[0];
+        //获取的图片文件
+        var fileList = file.files;
+        //文本框的父级元素
+        var input = document.getElementsByClassName(obj2)[0];
+        var imgArr = [];
+        //遍历获取到得图片文件
+        for (var i = 0; i < fileList.length; i++) {
+            var imgUrl = window.URL.createObjectURL(file.files[i]);
+            imgArr.push(imgUrl);
+            var img = document.createElement("img");
+            img.setAttribute("src", imgArr[i]);
+            var imgAdd = document.createElement("div");
+            imgAdd.setAttribute("class", "z_addImg");
+            imgAdd.appendChild(img);
+            imgContainer.appendChild(imgAdd);
+        };
+        imgRemove();
+    };
+
+    function imgRemove() {
+        var imgList = document.getElementsByClassName("z_addImg");
+        var mask = document.getElementsByClassName("z_mask")[0];
+        var cancel = document.getElementsByClassName("z_cancel")[0];
+        var sure = document.getElementsByClassName("z_sure")[0];
+        for (var j = 0; j < imgList.length; j++) {
+            imgList[j].index = j;
+            imgList[j].onclick = function() {
+                var t = this;
+                mask.style.display = "block";
+                cancel.onclick = function() {
+                    mask.style.display = "none";
+                };
+                sure.onclick = function() {
+                    mask.style.display = "none";
+                    t.remove();
+                };
+
+            }
+        };
+    };
+
+</script>
+<script>
+    $('[name="nice-select"]').click(function(e){
+
+        $('[name="nice-select"]').find('ul').hide();
+
+        $(this).find('ul').show();
+
+        e.stopPropagation();
+
+    });
+
+    $('[name="nice-select"] li').hover(function(e){
+
+        $(this).toggleClass('on');
+
+        e.stopPropagation();
+
+    });
+
+    $('[name="nice-select"] li').click(function(e){
+
+        var val = $(this).text();
+
+        $(this).parents('[name="nice-select"]').find('input').val(val);
+
+        $('[name="nice-select"] ul').remove();
+
+        e.stopPropagation();
+
+    });
+
+    $(document).click(function(){
+        $('[name="nice-select"] ul').remove();
+
+    });
+
+
+    function tij(){
+        if ($("[name=carName]").val()==""||$("[name=carName]")==null){
+            popup({type:'error',msg:"车名不得为空!",delay:2000,bg:true,clickDomCancel:true});
+      			return;
+      	  }
+        if ($("[name=carLetout]").val()==""||$("[name=carLetout]")==null){
+            popup({type:'error',msg:"排量不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+        if ($("[name=carTravel]").val()==""||$("[name=carTravel]")==null){
+            popup({type:'error',msg:"形式记录不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+        if ($("[name=carPrice]").val()==""||$("[name=carPrice]")==null){
+            popup({type:'error',msg:"原价不得为空!",delay:2000,bg:true,clickDomCancel:true});
+        }
+        if ($("[name=carTist]").val()==""||$("[name=carTist]")==null){
+            popup({type:'error',msg:"现价不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+
+        if ($("[name=carSite]").val()==""||$("[name=carSite]")==null){
+            popup({type:'error',msg:"发售地址不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+        if ($("[name=carTist]").val()==""||$("[name=carTist]")==null){
+            popup({type:'error',msg:"现价不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+        if ($("[name=carPhone]").val()==""||$("[name=carPhone]")==null){
+            popup({type:'error',msg:"联系电话不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+
+
+        if ($("[name=carDetails]").val()==""||$("[name=carDetails]")==null){
+            popup({type:'error',msg:"详情不得为空!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }
+
+
+        //验证内容
+
+        var imgg = [];
+        imgg = $('.z_addImg img');
+        if (imgg.length==0){
+            popup({type:'error',msg:"至少上传一张图片!",delay:2000,bg:true,clickDomCancel:true});
+            return;
+        }else{
+            $('#loading').modal('show');//开启加载
+        }
+        var formData = new FormData(document.getElementById("exeriseForm"));
+        var imgSrc = [];
+        var imgBase64 = [];
+        for (var i = 0; i < imgg.length; i++) {
+            if (imgg[i].src != 'undefined') {
+                imgSrc.push(imgg[i].src); var image = new Image();
+                image.src = imgg[i].src;
+                var base64 = getBase64Image(image);
+                imgBase64.push(base64);
+                formData.append("imageName", base64.split(',')[1]);
+            }
+        }
+        //location.href="/car/carAdd?imageName="+formData;
+
+        $.ajax({
+            url: "/car/carAdd",
+            type: "POST",
+            data: formData,
+            dateType:"json",
+            processData: false,  // 告诉jQuery不要去处理发送的数据
+            contentType: false,
+            success:function (data) {
+                $('#loading').modal('hide');
+                if (data=="1"){
+                    alert("上传成功!");
+                    location.href="/login/personalLoad";
+                } else{
+                    alert("上传失败!")
+                }
+            },error:function () {
+                $('#loading').modal('hide');
+                alert("上传异常!")
+            }
+            // 告诉jQuery不要去设置Content-Type请求头
+        });
+    }
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/"+ext);
+        return dataURL;
+    }
+    $(function () {
+    })
+</script>
+</html>

@@ -1,0 +1,24 @@
+@iphoneX_header: 44px;
+@iphoneX_footer: 34px;
+@media only screen and (device-width: 375px) and (device-height: 812px) and(-webkit-device-pixel-ratio: 3) {
+
+ // 增加头部适配层
+  html,.yj-content{
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: @iphoneX_footer;
+    &:after{
+      content: '';
+      z-index: 100;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: @iphoneX_footer;
+      background: #fff;
+    }
+  }
+  .yj-footer{
+    bottom: @iphoneX_footer;
+  }
+}

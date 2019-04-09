@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>买卖二手车详情页</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link th:href="@{/css/style4.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/myworld-extends.css}" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+
+
+        <section class="aui-flexView" id="navHead" style="height:auto">
+            <header class="aui-navBar aui-navBar-bg aui-navBar-fixed" id="nav-wrap">
+                <a href="javascript:;" class="aui-navBar-item">
+                    <i onclick="window.history.go(-1)" class="icon icon-return"></i>
+                </a>
+                <div class="aui-center">
+
+                </div>
+                <a href="javascript:;" class="aui-navBar-item" >
+                    <i class="icon icon-share"></i>
+                </a>
+            </header>
+            <section class="aui-scrollView">
+                <div class="img_gallery" id="commodity">
+                    <div class="main_img">
+                            <ul >
+                                <li class="image-option-wrap" style="height: 100%;" th:each="k:${session?.mm.xqimges}">
+                                    <img style="height: 100%;" th:src="'http://www.1jia1hczm.com/'+${k}" alt="">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                <div class="aui-reserve-head">
+                    <h2>[[${session?.mm?.xqlist?.get('carName')}]] <em>[[${session?.mm?.xqlist?.get('carState')}]]</em> <span>同级最低 <i class="icon icon-dow"></i></span> <i>[[${session.mm.xqlist.carSite}]]</i></h2>
+                    <p>[[${session?.mm?.xqlist?.get('carDetails')}]]</p>
+                    <h3><i>￥</i>[[${session?.mm?.xqlist?.get('carTist')}]] <i>/万</i>  <em>(市场价:[[${session?.mm?.xqlist?.get('carPrice')}]]万)</em></h3>
+                </div>
+                <div class="aui-flex aui-flex-clear">
+                    <div class="aui-flex-box">
+                        <span>满7免1</span>
+                        <span>满30天7折</span>
+                    </div>
+                    <div class="aui-arrow-right"></div>
+                </div>
+                <div class="aui-flex aui-flex-clear b-line">
+                    <div class="aui-flex-box ">
+                        <i class="icon icon-add"></i><h5>[[${session?.mm?.xqlist?.get('carSite')}]]</h5>
+                    </div>
+                    <div class="aui-arrow-right">[[${session?.mm?.xqlist?.get('carTravel')}]]km</div>
+                </div>
+                <div class="aui-layout aui-flex">
+                    <div class="aui-flex-box">
+                        <a href="javascript:;" class="aui-layout-item">
+                            <div class="aui-palace-grid-icon">
+                            </div>
+                            <div class="aui-palace-grid-text">
+                                <h2>所在地:[[${session?.mm?.xqlist.get('carSite')}]]</h2>
+                            </div>
+                        </a>
+                        <a href="javascript:;" class="aui-layout-item">
+                            <div class="aui-palace-grid-icon">
+                            </div>
+                            <div class="aui-palace-grid-text">
+                                <h2>行驶:[[${session?.mm?.xqlist.get('carTravel')}]]</h2>
+                            </div>
+                        </a>
+                        <a href="javascript:;" class="aui-layout-item">
+                            <div class="aui-palace-grid-icon">
+                            </div>
+                            <div class="aui-palace-grid-text">
+                                <h2>排量:[[${session?.mm?.xqlist.get('carTravel')}]]L</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="aui-arrow-right"></div>
+                </div>
+
+                <div class="divHeight"></div>
+
+
+                <div class="aui-text-head">
+                    <div>
+                        <h2>店铺:</h2>
+                    </div>
+                    <div class="aui-flex aui-flex-lou">
+                        <div class="aui-car-lou">
+                            <img th:src="@{'http://www.1jia1hczm.com/'+${session.mm.xqlist.get('userImges')}}" alt="">
+                        </div>
+                        <div class="aui-flex-box">
+
+                            <h6> 店铺名称:[[${session?.mm?.xqlist?.get('userName')}]]</h6>
+                        </div>
+                        <a th:href="@{'/gocar/userCaer?userID='+${session?.mm?.xqlist?.get('userID')}}">
+                        <div class="aui-flex-button">
+                            查看
+                        </div>
+                        </a>
+                    </div>
+                    <div>
+                        店铺介绍:
+                        <p>[[${session?.mm?.xqlist?.get('userDescribe')}]]</p>
+                    </div>
+                </div>
+            </section>
+            <div class="aui-reserve-footer">
+                <div class="aui-reserve-footer-one">
+                    <a th:href="@{'tel:'+${session.telPhone.get('telephonPhone')}}" class="aui-reserve-in">
+                        <div class="aui-reserve-in-icon">
+                        </div>
+                        <div class="aui-reserve-title">收藏</div>
+                    </a>
+                    <a th:href="@{'tel:'+${session.telPhone.get('telephonPhone')}}" class="aui-reserve-in">
+                        <div class="aui-reserve-in-icon">
+                        </div>
+                        <div class="aui-reserve-title">私信</div>
+                    </a>
+                </div>
+                <div class="aui-reserve-footer-two">
+                    <a th:href="@{'tel:'+${session.telPhone.get('telephonPhone')}}"><div class="aui-reserve-footer-inner">
+                        <div class=" aui-reserve-text">联系卖家</div>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <div id="turn-big-image"  >
+            <div class="onlyOne-flag"  th:each="k:${session?.mm.xqimges}">
+                <img class="backimg-wrap"  th:src="'http://www.1jia1hczm.com/'+${k}" alt="">
+            </div>
+        </div>
+        <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/touchSlider.js}"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var start=0;
+                var end=0;
+                $("#turn-big-image").on("touchstart",function (e) {
+                    start=e.originalEvent.changedTouches[0].screenX;
+                })
+                $("#turn-big-image").on("touchend",function (e) {
+                    end=e.originalEvent.changedTouches[0].screenX;
+                    if(start<end){
+                        var $prevDom = $('.photoActive').prev('.onlyOne-flag')[0];
+                        if($prevDom===undefined){
+                            return;
+                        }
+                        $('.photoActive').hide().removeClass('photoActive');
+                        $($prevDom).addClass('photoActive').fadeToggle(600);
+                    }else if(start>end) {
+                        var $nextDom = $('.photoActive').next('.onlyOne-flag')[0];
+                        if($nextDom===undefined){
+                            return;
+                        }
+                        $('.photoActive').hide().removeClass('photoActive');
+                        $($nextDom).addClass('photoActive').fadeToggle(600);
+                    }else {
+                        $('#turn-big-image div').removeClass('photoActive');
+                        $(this).fadeToggle(300);
+                        $('#turn-big-image div').hide()
+                        $('#turn-big-image div').removeClass('photoActive');
+                    }
+                })
+                //添加放大图点击事件
+
+                $(".image-option-wrap").click(function () {
+                    var imgIndex= $(".image-option-wrap").index(this);
+                    $('#turn-big-image div').eq(imgIndex).addClass('photoActive');
+                    $('#turn-big-image div').eq(imgIndex).show();
+                    $('#turn-big-image').fadeToggle(300);
+                })
+
+            })
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $(".main_img").touchSlider({
+                    flexible: true,
+                    speed: 200,
+                    btn_prev: $("#btn_prev"),
+                    btn_next: $("#btn_next"),
+                    paging: $(".point a"),
+                    counter: function(e) {
+                        $(".point a").removeClass("on").eq(e.current - 1).addClass("on");
+                        $(".img_font span").hide().eq(e.current - 1).show();
+                    }
+                });
+
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var navHeight = $("#navHead").offset().top;
+                var navFix = $("#nav-wrap");
+                $(window).scroll(function() {
+                    if ($(this).scrollTop() > navHeight) {
+                        navFix.addClass("aui-flex");
+                    } else {
+                        navFix.removeClass("aui-flex");
+                    }
+                })
+            });
+
+            $(document).ready(function() {
+                $(".btn-slide").click(function() {
+                    $("#show").slideToggle();
+                });
+            });
+        </script>
+
+
+    </body>
+</html>

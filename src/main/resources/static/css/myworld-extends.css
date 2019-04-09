@@ -1,0 +1,27 @@
+#turn-big-image {
+    display: none;
+    position: fixed;
+    z-index: 50000;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(0,0,0);
+}
+#turn-big-image div {
+    display: none;
+}
+.photoActive {
+    !important;
+    display: block;
+}
+.backimg-wrap {
+    !important;
+    border: 9px solid white;
+    position: absolute;
+    width: 98%;
+    top: 30px;
+    left: 1%;
+    height: auto;
+    max-height: 80%;
+}

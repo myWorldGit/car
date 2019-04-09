@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.java.merchant.dao.UserInsertDao">
+<select id="userPhoneInfo" resultType="m">
+    select  * from user  where userPhone=#{userPhone}
+</select>
+    <insert id="insertUser" parameterType="m">
+        insert into user (userID,userName,userPhone,userImges,userPwd) value (uuid(),#{userName},#{userPhone},#{userImges},#{userPwd})
+    </insert>
+<select id="userLogin" resultType="m">
+    select * from user where  userPhone=#{userPhone} and userPwd=#{userPwd}
+</select>
+    <select id="userPhoneVal" resultType="m">
+        select * from user  where  userPhone=#{userPhone}
+    </select>
+    <update id="updateUser" parameterType="m">
+        update  user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="userName!=null and userName!=''">
+                userName=#{userName},
+            </if>
+            <if test="userPhone!=null and userPhone!=''">
+                userPhone=#{userPhone},
+            </if>
+            <if test="userSite!=null and userSite!=''">
+                userSite=#{userSite},
+            </if>
+            <if test="userImges!=null and userImges!=''">
+                userImges=#{userImges},
+            </if>
+            <if test="userDescribe!=null and userDescribe!=''">
+                userDescribe=#{userDescribe},
+            </if>
+            <if test="userPwd!=null and userPwd!=''">
+                userPwd=#{userPwd},
+            </if>
+        </trim>
+        where
+        userID=#{userID}
+    </update>
+
+</mapper>

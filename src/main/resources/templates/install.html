@@ -1,0 +1,247 @@
+﻿<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head design-width="750">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<title>修改个人信息</title>
+<link rel="stylesheet" th:href="@{/css/style3.css}" /><!--页面样式-->
+	<meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+	<link rel="stylesheet" type="text/css" th:href="@{/style/dialog.css}">
+    <script th:src="@{/js/auto-size.js}"></script><!--设置字体大小-->
+
+	<script th:src="@{/js/zepto.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/dialog.min.js}"></script>
+
+	<script th:src="@{/js/jquery-2.2.4.min.js}"></script><!--设置字体大小-->
+
+	<link rel="stylesheet" th:href="@{/layui/css/layui.mobile.css}">
+	<link rel="stylesheet" th:href="@{/layui/css/layui.css}">
+	<link rel="stylesheet" th:href="@{/css/yj_css.css}">
+	<script th:src="@{/layui/layui.all.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/yj_js.js}"></script>
+
+</head>
+
+
+
+<body>
+	<div class="mobile-wrap center mobile-wrap-mb">
+        <header>
+			<a th:href="@{/login/personalLoad}">
+        	<span class="return">
+        		返回
+        	</span>
+			</a>
+        </header>
+        <form action="" method="post" id="formPost">
+        <main>
+        	<div class="inform">
+        		<h3>个人信息管理</h3>
+        		<div class="inform-list">
+        			<ul>
+        				<li class="acti">个人信息</li>
+                        <li class="acti">账户密码</li>
+                    </ul>
+        		</div>
+        		<div class="inform-text show">
+        			<p>
+        				<span>
+        					用户名称 ：
+        				</span>
+                        <input hidden type="text" th:value="${session.user?.get('userID')}" name="userID"/>
+                        <input type="text" th:value="${session.user?.get('userName')}" name="userName"/>
+        			</p>
+        			<p>
+        				<span>
+        					地址:
+        				</span>
+        				<input type="text" th:value="${session.user?.get('userSite')}" name="userSite"/>
+        			</p>
+
+        			<p>
+        				<span>
+        					新电话号:
+        				</span>
+        				<input type="text" name="userPhone" />
+        			</p>
+
+					<p>
+        				<span>
+        					原手机号:
+        				</span>
+						<input  type="text" name="yuanPhone" />
+					</p>
+					<p>
+        				<span>
+        					公司介绍:
+        				</span>
+						<input th:value="${session.user?.get('userDescribe')}" type="text" name="userDescribe"/>
+
+                    </p>
+        			<h4>
+        				<input type="submit" value="确定修改" />
+        				<a href="#">遇到问题？</a>
+        			</h4>
+        		</div>
+        	</div>
+        </main>
+		</form>
+   </div><!--mobile_wrap-->
+
+<form action="" method="post" id="userSetpwd">
+<div class="inform-text show">
+    <p>
+        				<span>
+        					原密码 ：
+        				</span>
+        <input  type="password" name="yuanMima"/>
+		<input hidden type="text" th:value="${session.user?.get('userID')}" name="userID"/>
+    </p>
+    <p>
+        				<span>
+        					新密码:
+        				</span>
+        <input type="password"  name="userPwd"/>
+    </p>
+
+    <p>
+        				<span>
+        					确认密码:
+        				</span>
+        <input type="password" name="QuserPwd" />
+    </p>
+    <h4>
+        <input type="submit"   name="" id="" value="确定修改" />
+        <a href="#">遇到问题？</a>
+    </h4>
+</div>
+</form>
+</div>
+
+</main>
+
+</div><!--mobile_wrap-->
+</body>
+
+<script type="text/javascript">
+	$('.inform-list ul li').click(function(){
+		var n=$(this).index();
+		$(this).addClass('acti').siblings().removeClass('acti');
+		$('.inform-text').fadeOut();
+		$('.inform-text').eq(n).fadeIn();
+	})
+
+    $("#formPost").submit(
+        function () {
+            var  phone=[[${session.user.get('userPhone')}]];
+           if ($("[name=yuanPhone]").val()!='' && $("[name=yuanPhone]").val()!=phone){
+               popup({type:'error',msg:"原电话不一致!!",delay:2000,bg:true,clickDomCancel:true});
+               return false;
+           }
+            if ($("[name=userName]").val()==''||$("[name=userName]").val()==null){
+                popup({type:'error',msg:"用户名不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+
+                return false;
+            }
+            if ($("[name=yuanPhone]").val()==''||$("[name=yuanPhone]").val()==null){
+                popup({type:'error',msg:"原电话不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            }
+            if ($("[name=userSite]").val()==''||$("[name=userSite]").val()==null){
+                popup({type:'error',msg:"地址不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            }
+
+            if ($("[name=userDescribe]").val()==''||$("[name=userDescribe]").val()==null){
+                popup({type:'error',msg:"公司介绍不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            }
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("[name=userPhone]").val()))
+            {
+                popup({type:'error',msg:"请输入有效的手机号码!!",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            }
+            $.getJSON("/login/phoneIf",{"phone":$("[name=userPhone]").val()},function (data) {
+                if (data == "1"||data==1) {
+                    popup({type:'error',msg:"该电话已经注册了!!",delay:2000,bg:true,clickDomCancel:true});
+                    return false;
+                }else{
+                    $.ajax(
+                        {
+                            url:"/login/userUpdateSet",
+                            data:$("#formPost").serialize(),
+                            type:"POST",
+                            success:function (ddd) {
+                                if (ddd=="error"){
+                                    popup({type:'error',msg:"修改异常!!",delay:2000,bg:true,clickDomCancel:true});
+                                } else if (ddd=="success") {
+                                    alert("修改成功!");
+                                    location.href="/login/personalLoad";
+
+                                }
+                            },error:function () {
+                                popup({type:'error',msg:"服务器迷路了!!",delay:2000,bg:true,clickDomCancel:true});
+                            }
+                        }
+                    )
+				}
+            })
+            //修改
+        }
+    );
+
+	$("#userSetpwd").submit(function () {
+        var YuserPwd=[[${session?.user?.get('userPwd')}]];//原密码
+        if ($("[name=yuanMima]").val()==''||$("[name=yuanMima]").val()==null){
+            popup({type:'error',msg:"原密码不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+            return false;
+        }
+        if ($("[name=yuanMima]").val()!=YuserPwd){
+            popup({type:'error',msg:"原密码错误!!",delay:2000,bg:true,clickDomCancel:true});
+            return false;
+        }
+
+        if ($("[name=userPwd]").val()==''||$("[name=userPwd]").val()==null){
+            popup({type:'error',msg:"密码不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+            return false;
+        }
+        if ($("[name=QuserPwd]").val()==''||$("[name=QuserPwd]").val()==null){
+            popup({type:'error',msg:"确认密码不得为空!!",delay:2000,bg:true,clickDomCancel:true});
+            return false;
+        }
+        if ($("[name=userPwd]").val()!=$("[name=QuserPwd]").val()){
+            popup({type:'error',msg:"两次密码不一致!!",delay:2000,bg:true,clickDomCancel:true});
+            return false;
+        }
+        if ($("[name=yuanMima]").val()!=YuserPwd){
+            popup({type:'error',msg:"原密码错误!!",delay:2000,bg:true,clickDomCancel:true});
+        }else{
+            $.ajax(
+                {
+                    url:"/login/userUpdateSet",
+                    data:$("#userSetpwd").serialize(),
+                    type:"POST",
+                    success:function (ddd) {
+                        alert(ddd)
+                        if (ddd=="error"){
+                            popup({type:'error',msg:"修改异常!!",delay:2000,bg:true,clickDomCancel:true});
+                        } else if (ddd=="success") {
+                           alert("修改成功!");
+                            location.href="/login/personalLoad";
+
+                        }
+                    },error:function () {
+                        popup({type:'error',msg:"服务器迷路了!!",delay:2000,bg:true,clickDomCancel:true});
+                    }
+                }
+            )
+        }
+
+    })
+</script>
+</html>

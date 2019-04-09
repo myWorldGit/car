@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>账号密码登陆</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link th:href="@{/css/style1.css}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <!--
+         * 17素材vip建站专区模块代码
+         * 详尽信息请看官网：http://www.17sucai.com/pins/vip
+         *
+         * Copyright , 温F州易站网络科技有限公司版权所有
+         *
+         * 请尊重原创，未经允许请勿转载。
+         * 在保留版权的前提下可应用于个人或商业用途
+        -->
+        <section class="aui-flexView">
+            <div align="left" onclick="window.history.go(-1)">&lt;返回</div>
+            <section class="aui-scrollView">
+                <div class="aui-jop-chang">
+                    <p>账号密码登陆</p>
+                </div>
+                <form method="post" id="myform">
+
+                    <div class="aui-jop-top">
+                        <div class="aui-jop-top-box">
+                            <form action="">
+                                <div class="aui-flex b-line">
+                                    <div class="aui-form-item">
+                                        <img th:src="@{/images/iphone.png}" alt="">
+                                    </div>
+                                    <div class="aui-flex-box">
+                                        <input type="text" name="userPhone" placeholder="请输入手机号码">
+                                    </div>
+                                </div>
+                                <div class="aui-flex b-line">
+                                    <div class="aui-form-item">
+                                        <img th:src="@{/images/psd.png}" alt="">
+                                    </div>
+                                    <div class="aui-flex-box">
+                                        <input type="password" name="userPwd" placeholder="请输入密码">
+                                    </div>
+                                    <div class="aui-psd">
+                                        <a href="javascript:;">忘记密码</a>
+                                    </div>
+                                </div>
+                                <div class="aui-form-button">
+                                    <button id="subBtn" onclick="login()" type="button">登录</button>
+                                </div>
+                                <p th:text="${err}" style="color: red;text-align: center"></p>
+                                <div class="aui-register aui-register-a">
+                                    <a href="javascript:;"></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </form>
+                <div class="aui-register">
+                    <a th:href="@{/login/regis}">注册账号</a>
+                    <a th:href="@{/login/urlReturn?Url=textlogin}">短信验证登陆</a>
+                </div>
+            </section>
+            <footer class="aui-footer-link">
+                <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">登录即代表阅读并同意 <em>用户协议</em></a>
+            </footer>
+        </section>
+
+    </body>
+    <script th:src="@{/js/jquery.min.js}"></script>
+<script>
+
+
+    function login() {
+            if($("[name=userPhone]").val()==''){
+                alert("用户名不能为空！！！");
+                return;
+            }else if($("[name=userPwd]").val()==''){
+                alert("密码不能为空！！！");
+                return;
+            }
+        $.getJSON("/login/loginUser",{"userPhone":$("[name=userPhone]").val(),"userPwd":$("[name=userPwd]").val()},function (data) {
+            if (data=="1"){
+                alert("登陆成功!");
+                location.href="/login/personalLoad";//登陆成功跳转
+            } else{
+                alert("账号或密码错误!");
+                //登陆失败当前等待
+            }
+        })
+    }
+</script>
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.java.merchant.dao.CarBrandDao">
+<select id="selectCarBanList" resultType="m">
+    select  * from  carbrand
+</select>
+<insert id="insertCar" parameterType="m">
+    insert into car values(NULL,#{carImges},#{carPrice},#{carTist},NOW(),#{carSite},#{carState},#{carName},#{carTravel},#{carDetails},0,#{carLetout},now(),0,#{carBrandID},#{userID},#{carPhone})
+</insert>
+    <select id="countCar" resultType="int">
+        select count(*) from car where  userID=#{userID}
+    </select>
+
+    <select id="carListUserInio" resultType="m">
+        select  * from  car where userID=#{userID}
+        <if  test="valKey!=null and valKey!=''">
+            and  carName like '%${valKey}%'
+        </if>
+         limit #{size},#{count}
+    </select>
+
+    <select id="carDetails" resultType="m">
+        select  * from  car where carID=#{carID}
+    </select>
+
+    <update id="carUpdateR" parameterType="m">
+        update car SET
+        carPrice=#{carPrice},
+        carTist=#{carTist},
+        carSite=#{carSite},
+        carState=#{carState},
+        carTravel=#{carTravel},
+        carName=#{carName},
+        carDetails=#{carDetails},
+        carLetout=#{carLetout},
+        carBrandID=#{carBrandID},
+        carPhone=#{carPhone}
+        where
+         carID=#{carID}
+    </update>
+
+    <delete id="deletecar">
+        delete from car where carID=#{carID}
+    </delete>
+</mapper>

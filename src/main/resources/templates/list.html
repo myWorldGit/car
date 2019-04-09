@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>个人发布</title>
+	<meta content="1+1好车直卖" name="keywords" />
+	<meta content="1+1好车直卖" name="description" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/iconfont.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/guangda.css}">
+	<!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/layer.js}"></script>
+	</head>
+	<body>
+<div class="black_overlay"></div>
+<!--内容-->
+<header class="mo-header">
+      <div class="mo-header-left"> <a onclick="window.history.go(-1)">返回</a> <i class="iconfont"></i> <a href="#"></a> </div>
+      <div align="center" ><input id="valkey"  style="height: 30px;width: 250px;outline:none;"  type="text"  placeholder="请输入您的汽车名称" ></div><div class="mo-header-right"> <a id="sosuo"> 搜索 </a> </div>
+    </header>
+<div class="orderby-box clearfix">
+    </div>
+<div class="carnum">您上架了<span class="orange">[[${session.carCount}]]</span> 条车源</div>
+<div id="listcar">
+    <div id="datelist">
+    <div  th:each="k:${session.carlist}">
+        <div class="listcar">
+          <a th:href="@{|/gocar/carDetails?carID=${k.carID}|}" target="_blank">
+              <div class="carimg"> <img th:src="@{'http://www.1jia1hczm.com//'+${k?.get('carImges')}}"class="img-responsive lazy"/> </div>
+        <div class="carinfo">
+        <h4 th:text="${k.get('carName')}"></h4>
+        <p th:text="'发帖时间:'+${k.get('carTimeDate')}+'/'+${k.get('carTravel')}+'公里'"></p>
+        <p th:text="'现价:'+${k.get('carTist')}+'万/原价:'+${k.get('carPrice')}+'万'"></p>
+        </div>
+        </a>
+      </div>
+
+      </div>
+    </div>
+</div>
+<a href="javascript:;" id="chax"  class="nextpage">查看更多车源</a>
+<a href="javascript:;" id="returntop"></a> 
+<script type="text/javascript" th:src="@{/js/jquery.lazyload.js}"></script>
+<script type="text/javascript" charset="utf-8">
+    var size=[[${session.size}]];
+  $(function() {
+      var carcount=[[${session.carCount}]];
+     $("img.lazy").lazyload({
+		effect : "fadeIn"
+     });
+	 $('#returntop').click(function(){$('html,body').animate({scrollTop: '0px'}, 1000);return false;});
+/*搜索
+ */
+     $("#sosuo").click(function () {
+         size=1;
+         $("[id=datelist]").html("");
+         var valkey=$("#valkey").val();
+         $.getJSON("/gocar/carAjax",{"valkey":valkey,"size":size},function (data) {
+             var zhi="";
+             if (data==""||data==null){
+                 $("#chax").text("已经翻到底部了")
+             }else{
+                 $("#chax").text("查看更多车源")
+             }
+             $(data).each(function (index,k) {
+                 zhi+="<div class=\"listcar\">";
+                 zhi+="<a  href=/gocar/carDetails?carID="+k.carID+" target=\"_blank\">";
+                 zhi+="<div class=\"carimg\"> <img src=\"http://www.1jia1hczm.com//"+k.carImges+"";
+                 zhi+="\"class=\"img-responsive lazy\"/></div>";
+                 zhi+="<div class=\"carinfo\">";
+                 zhi+="<h4 >"+k.carName+"</h4>";
+                 zhi+="<p >"+'发帖时间:'+k.carTimeDate+'/'+k.carTravel+'公里'+"</p>";
+                 zhi+="<p >"+'现价:'+k.carTist+'万/原价:'+k.carPrice+'万'+"</p>";
+                 zhi+="</div>";
+                 zhi+="</a>";
+                 zhi+="</div>";
+             })
+             $("[id=datelist]").append(zhi);
+         })
+      });
+	 
+	 
+	 //翻页
+	 $("#chax").click(function () {
+         size+=1;
+         var valkey=$("#valkey").val();
+         $.getJSON("/gocar/carAjax",{"valkey":valkey,"size":size},function (data) {
+           var zhi="";
+           if (data==""||data==null){
+               $("#chax").text("已经翻到底部了")
+           }
+             $(data).each(function (index,k) {
+                  zhi+="<div class=\"listcar\">";
+                 zhi+="<a href=/gocar/carDetails?carID="+k.carID+" target=\"_blank\">";
+                 zhi+="<div class=\"carimg\"> <img src=\"http://www.1jia1hczm.com//"+k.carImges+"";
+                 zhi+="\"class=\"img-responsive lazy\"/></div>";
+                 zhi+="<div class=\"carinfo\">";
+                 zhi+="<h4 >"+k.carName+"</h4>";
+                 zhi+="<p >"+'发帖:'+k.carTimeDate+'/'+k.carTravel+'公里'+"</p>";
+                 zhi+="<p >"+'现价:'+k.carTist+'万/原价:'+k.carPrice+'万'+"</p>";
+                 zhi+="</div>";
+                 zhi+="</a>";
+                 zhi+="</div>";
+             })
+                $("[id=datelist]").append(zhi);
+         })
+     })
+  });
+     
+</script>
+</body>
+</html>

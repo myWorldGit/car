@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>1+1专车直卖</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+    <script th:href="@{/text/javascript}" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/slider.js}"></script>
+    <script type="text/javascript" th:src="@{/js/touchSlider.js}"></script>
+</head>
+<body>
+<section class="aui-flexView">
+    <section class="aui-scrollView">
+
+
+
+    </section>
+    <footer class="aui-footer">
+        <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-home"></i>
+                    </span>
+            <span class="aui-tabBar-item-text">首页</span>
+        </a>
+        <a href="javascript:;" class="aui-tabBar-item ">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-loan"></i>
+                    </span>
+            <span class="aui-tabBar-item-text">买车</span>
+        </a>
+        <a href="javascript:;" class="aui-tabBar-item">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-find"></i>
+                    </span>
+            <span class="aui-tabBar-item-text">卖车</span>
+        </a>
+        <a href="javascript:;" class="aui-tabBar-item ">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-car"></i>
+                    </span>
+            <span class="aui-tabBar-item-text">发现</span>
+        </a>
+        <a href="javascript:;" class="aui-tabBar-item ">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-me"></i>
+                    </span>
+            <span class="aui-tabBar-item-text">我的</span>
+        </a>
+    </footer>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $(".main_img").touchSlider({
+            flexible: true,
+            speed: 200,
+            btn_prev: $("#btn_prev"),
+            btn_next: $("#btn_next"),
+            paging: $(".point a"),
+            counter: function(e) {
+                $(".point a").removeClass("on").eq(e.current - 1).addClass("on");
+                $(".img_font span").hide().eq(e.current - 1).show();
+            }
+        });
+
+    });
+</script>
+<script type="text/javascript">
+    function b() {
+        t = parseInt(x.css('top'));
+        y.css('top', '19px');
+        x.animate({
+            top: t - 19 + 'px'
+        }, 'slow');
+        if (Math.abs(t) == h - 19) {
+            y.animate({
+                top: '0px'
+            }, 'slow');
+            z = x;
+            x = y;
+            y = z;
+        }
+        setTimeout(b, 2100);
+    }
+    $(document).ready(function() {
+        $('.swap').html($('.news_li').html());
+        x = $('.news_li');
+        y = $('.swap');
+        h = $('.news_li li').length * 19;
+        setTimeout(b, 3000);
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>1+1好车直卖</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/bootstrap/bootstrap.min..css}" rel="stylesheet" type="text/css"/>
+        <script th:href="@{/text/javascript}" th:src="@{/js/jquery.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/slider.js}"></script>
+        <script type="text/javascript" th:src="@{/js/touchSlider.js}"></script>
+        <script type="text/javascript" th:src="@{/bootstrap/bootstrap.min.js}"></script>
+    </head>
+    <body>
+        <section class="aui-flexView">
+            <section class="aui-scrollView">
+                <div class="aui-header-auto">
+                    <div class="aui-header-address">
+                       <span>
+                            <i class="icon icon-address"></i>武汉
+                       </span>
+                    </div>
+                    <div class="aui-header-text">
+                        <h1><span id="h"></span><em>次用户的选择</em></h1>
+                    </div>
+                </div>
+
+                <div class="m-slider m-slider-bos" data-ydui-slider>
+                    <div class="slider-wrapper">
+                        <div class="slider-item">
+                            <div class="aui-palace aui-palace-four clearfix">
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-001.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>买车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-002.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>卖车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-003.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>估价</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-004.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>点评</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-005.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>之家E贷</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-006.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>诚信中心</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-007.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>7步走</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-008.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>文章</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="slider-item">
+                            <div class="aui-palace aui-palace-four clearfix">
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-001.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>买车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-002.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>卖车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-003.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>估价</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-004.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>点评</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-005.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>之家E贷</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-006.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>诚信中心</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-007.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>7步走</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-008.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>文章</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="slider-item">
+                            <div class="aui-palace aui-palace-four clearfix">
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-001.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>买车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-002.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>卖车</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-003.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>估价</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-004.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>点评</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-005.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>之家E贷</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-006.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>诚信中心</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-007.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>7步走</h2>
+                                    </div>
+                                </a>
+                                <a href="javascript:;" class="aui-palace-grid">
+                                    <div class="aui-palace-grid-icon">
+                                        <img th:src="@{/images/icon-item-008.png}" alt="">
+                                    </div>
+                                    <div class="aui-palace-grid-text">
+                                        <h2>文章</h2>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="slider-pagination"></div>
+                </div>
+
+                <div class="img_gallery" id="commodity">
+                    <div class="main_img">
+                        <ul>
+                            <li th:each="a:${session.list}">
+                                <img th:src="${a.advertisingImges}">
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="img_font">
+                        <span>1/6</span>
+                        <span>2/6</span>
+                        <span>3/6</span>
+                        <span>4/6</span>
+                        <span>5/6</span>
+                        <span>6/6</span>
+                    </div>
+                </div>
+
+                <div class="aui-flex aui-hot-news">
+                    <div class="aui-hot-news-title">
+                        <img th:src="@{/images/hot-title.png}" alt="">
+                    </div>
+                    <div class="aui-flex-box">
+                        <div class="aui-flex-info-box">
+                            <div class="t_news">
+                                <ul class="news_li">
+                                    <li>
+                                        <a href="JavaScript:;">2013款百万纪念版奥迪A3成交...</a>
+                                    </li>
+                                    <li>
+                                        <a href="JavaScript:;">新款帕萨特即将上市你准备好了...</a>
+                                    </li>
+                                    <li>
+                                        <a href="JavaScript:;">2013款百万纪念版奥迪A3成交...</a>
+                                    </li>
+                                    <li>
+                                        <a href="JavaScript:;">新款帕萨特即将上市你准备好了...</a>
+                                    </li>
+                                    <li>
+                                        <a href="JavaScript:;">2013款百万纪念版奥迪A3成交...</a>
+                                    </li>
+                                    <li>
+                                        <a href="JavaScript:;">新款帕萨特即将上市你准备好了...</a>
+                                    </li>
+                                </ul>
+                                <ul class="swap"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="aui-car-content">
+                    <div class="aui-flex">
+                        <div class="aui-flex-box">
+                            <h2>诚信联盟 <em>●精选车源</em></h2>
+                        </div>
+                        <div class="aui-arrow-more">
+                            更多
+                        </div>
+                    </div>
+
+                    <div class="aui-slide-list">
+                        <ul class="aui-slide-item-list" id="ul2">
+                            <!--<li class="aui-slide-item-item" th:each="a:${session.rec}">
+                                <a href="javascript:;" class="aui-link">
+                                    <img th:src="${a.src}" alt="">
+                                </a>
+                                <div class="aui-good-content">
+                                    <h3 th:text="${a.name}"></h3>
+                                    <p th:text="${a.pric}"></p>
+                                    <span>7天无理由退款</span>
+                                </div>
+                            </li>-->
+                        </ul>
+                    </div>
+
+                    <div class="aui-flex">
+                        <div class="aui-flex-box">
+                            <h2>快速找车</h2>
+                        </div>
+                        <div class="aui-arrow-more">
+                            <a th:href="tiao">更多</a>
+                        </div>
+                    </div>
+
+                    <div class="aui-pattern">
+                        <a th:href="@{|/find2?name=7|}" >别克</a>
+                        <a th:href="@{|/find2?name=12|}" >标致</a>
+                        <a th:href="@{|/find2?name=6|}" >本田</a>
+                        <a th:href="@{|/find2?name=59|}" >哈弗</a>
+                        <a th:href="@{|/find2?name=31|}" >大众</a>
+                        <a th:href="@{|/find2?name=9|}" >奥迪</a>
+                        <a th:href="@{|/find2?name=44|}" >丰田</a>
+                        <a th:href="@{|/find2?name=10|}" >宝马</a>
+                    </div>
+
+                    <div class="aui-flex">
+                        <div class="aui-flex-box">
+                            <h2>诚信联盟 <em>●严选商家</em></h2>
+                        </div>
+                        <div class="aui-arrow-more">
+                            更多
+                        </div>
+                    </div>
+
+                    <div class="aui-slide-list">
+                        <ul class="aui-slide-item-list" id="ul">
+                            <!--<li class="aui-slide-item-item" th:each="a:${session.user}">
+                                <a href="javascript:;" class="aui-link">
+                                    <img th:src="${a.userImges}" alt="">
+                                </a>
+                                <div class="aui-good-content">
+                                    <h3>天天爱车旗舰店</h3>
+                                    <span class="aui-text-info">在售车:899</span>
+                                </div>
+                            </li>-->
+                        </ul>
+                    </div>
+                    <div class="aui-flex">
+                        <div class="aui-flex-box">
+                            <h2>为你推荐</h2>
+                        </div>
+                        <div class="aui-arrow-more">
+                            更多
+                        </div>
+                    </div>
+
+                    <div id="vv">
+                    </div>
+
+
+                </div>
+
+
+            </section>
+            <footer class="aui-footer">
+                <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-home"></i>
+                    </span>
+                    <span class="aui-tabBar-item-text">首页</span>
+                </a>
+                <a href="/login/personalLoad" class="aui-tabBar-item ">
+                    <span class="aui-tabBar-item-icon">
+                        <i class="icon icon-me"></i>
+                    </span>
+                    <span class="aui-tabBar-item-text">我的</span>
+                </a>
+            </footer>
+        </section>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $(".main_img").touchSlider({
+                    flexible: true,
+                    speed: 200,
+                    btn_prev: $("#btn_prev"),
+                    btn_next: $("#btn_next"),
+                    paging: $(".point a"),
+                    counter: function(e) {
+                        $(".point a").removeClass("on").eq(e.current - 1).addClass("on");
+                        $(".img_font span").hide().eq(e.current - 1).show();
+                    }
+                });
+
+            });
+            $(function () {
+                $.ajax({
+                    type: "post",
+                    url: "cou",
+                    dataType: "text",
+                    success:function (data) {
+                        $("#h").text(data);
+                    }
+                });
+                $.ajax({
+                    type:"post",
+                    url:"recommend",
+                    dataType:"json",
+                    success:function (data) {
+                        th="";
+                        $(data).each(function (a,k) {
+                            th+="<li class='aui-slide-item-item'' >";
+                            th+="<a href='/gocar/userCaer?userID="+k.userID+"' class='aui-link'>";
+                            th+="<img src='http://www.1jia1hczm.com/"+k.userImges+"' alt=''>";
+                            th+="</a>";
+                            th+="<div class='aui-good-content'>";
+                            th+="<h3>"+k.userName+"</h3>";
+                            th+="<span class='aui-text-info'>在售车:899</span>";
+                            th+="</div>";
+                            th+="</li>";
+                        })
+                        $("#ul").html(th);
+                    }
+                });
+                $.ajax({
+                    url:"cartj",
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        th="";
+                        $(data).each(function (a,k) {
+                            th+="<li class='aui-slide-item-item' >";
+                            th+="<a href='/xq?cid="+k.carID+"' class='aui-link'>";
+                            th+="<img src='http://www.1jia1hczm.com/"+k.carImges+"' alt=''>";
+                            th+="</a>";
+                            th+="<div class='aui-good-content'>";
+                            th+="<h3 >"+k.carName+"</h3>";
+                            th+="<p >"+k.carDetails+"</p>";
+                            th+="<span>7天无理由退款</span>";
+                            th+="</div>";
+                            th+="</li>";
+                        })
+                        $("#ul2").html(th);
+                    }
+                })
+                $.ajax({
+                    type:"post",
+                    url:"tj",
+                    dataType:"json",
+                    success:function (data) {
+                        th="";
+                        $(data.recommendList).each(function (a,k) {
+                            th+="<div class='aui-flex'>";
+                            th+="<a href='/xq?cid="+k.carID+"'>";
+                            th+="<div class='aui-flex-spot-img'>";
+                            th+="<img src='http://www.1jia1hczm.com/"+k.carImges+"' alt=''>";
+                            th+="</div>";
+                            th+="<div class='aui-flex-box'>";
+                            th+="<h2>"+k.carDetails+"</h2>";
+                            th+="<p>"+k.carName+"</p>";
+                            th+="<span>"+(data.discount.discountMoney+k.carTist)+"万</span>";
+                            th+="</div>";
+                            th+="</a>"
+                            th+="</div>";
+                        })
+                        $("#vv").html(th);
+                    }
+                })
+            })
+        </script>
+        <script type="text/javascript">
+            function b() {
+                t = parseInt(x.css('top'));
+                y.css('top', '19px');
+                x.animate({
+                    top: t - 19 + 'px'
+                }, 'slow');
+                if (Math.abs(t) == h - 19) {
+                    y.animate({
+                        top: '0px'
+                    }, 'slow');
+                    z = x;
+                    x = y;
+                    y = z;
+                }
+                setTimeout(b, 2100);
+            }
+            $(document).ready(function() {
+                $('.swap').html($('.news_li').html());
+                x = $('.news_li');
+                y = $('.swap');
+                h = $('.news_li li').length * 19;
+                setTimeout(b, 3000);
+            })
+
+        </script>
+
+    </body>
+</html>

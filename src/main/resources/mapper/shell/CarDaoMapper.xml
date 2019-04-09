@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.java.shell.dao.CarDao">
+    <select id="recommend" resultType="m">
+        select * from car where  carTuijiain=1 LIMIT 0,5
+    </select>
+    <select id="find" resultType="m">
+        select * from car,carbrand where car.carImges=carbrand.carBrandID AND car.carTist BETWEEN #{one} AND #{two} LIMIT 0,5
+    </select>
+    <select id="find2" resultType="m">
+        select * from car,carbrand where car.carImges=carbrand.carBrandID AND car.carName=#{name} LIMIT 0,5
+    </select>
+    <select id="findQuery" resultType="m">
+        SELECT * FROM car where 1=1
+        <if test="aaa!=null and aaa!=''">
+             and carName LIKE '%${aaa}%' OR carTist LIKE '%${aaa}%'
+        </if>
+        <if test="name!=null and name!=''">
+             and carBrandID=#{name}
+        </if>
+        <if test="moneys!=null and moneys!=''">
+             and carTist  BETWEEN #{money} and #{moneys}
+        </if>
+        <if test="zuidi!=1 and zuidi!='' and zuidi!=null">
+              ORDER BY carTist
+        </if>
+        <if test="zuigao!=1 and zuigao!='' and zuigao!=null">
+              ORDER BY carTist DESC
+        </if>
+        <if test="zuiduan!=1 and zuiduan!='' and zuiduan!=null">
+              ORDER BY carApply DESC
+        </if>
+        <if test="zuishao!=1 and zuishao!='' and zuishao!=null">
+              ORDER BY carTravel
+        </if>
+        limit #{size},#{count}
+    </select>
+    <select id="cou" resultType="java.lang.Integer">
+        select count(*) FROM car where 1=1
+        <if test="aaa!=null and aaa!=''">
+            and carName LIKE '%${aaa}%' OR carTist LIKE '%${aaa}%'
+        </if>
+        <if test="name!=null and name!=''">
+            and carBrandID=#{name}
+        </if>
+        <if test="moneys!=null and moneys!=''">
+            and carTist  BETWEEN #{money} and #{moneys}
+        </if>
+        <if test="zuidi!=1 and zuidi!='' and zuidi!=null" >
+            ORDER BY carTist
+        </if>
+        <if test="zuigao!=1 and zuigao!='' and zuigao!=null">
+            ORDER BY carTist DESC
+        </if>
+        <if test="zuiduan!=1 and zuiduan!='' and zuiduan!=null">
+            ORDER BY carApply DESC
+        </if>
+        <if test="zuishao!=1 and zuishao!='' and zuishao!=null">
+            ORDER BY carTravel
+        </if>
+    </select>
+    <select id="xq" resultType="m">
+        select * from car c,user u where carId=${cid} and u.userID=c.userID
+    </select>
+</mapper>

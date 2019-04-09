@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>短信登陆</title>
+        <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+        <meta content="yes" name="apple-mobile-web-app-capable"/>
+        <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+        <meta content="telephone=no" name="format-detection"/>
+        <link th:href="@{/css/style1.css}" rel="stylesheet" type="text/css"/>
+        <meta name="viewport"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1.0" />
+        <link rel="stylesheet" type="text/css" th:href="@{/style/dialog.css}">
+        <script th:src="@{/js/auto-size.js}"></script><!--设置字体大小-->
+        <script th:src="@{/js/zepto.min.js}"></script>
+        <script type="text/javascript" th:src="@{/js/dialog.min.js}"></script>
+
+    </head>
+    <body>
+        <section class="aui-flexView">
+            <section class="aui-scrollView">
+                <div align="left" onclick="window.history.go(-1)">&lt;返回</div>
+                <div class="aui-jop-chang">
+                    <p>短信验证登陆</p>
+                </div>
+                <form method="post" id="myform">
+                    <div class="aui-jop-top">
+                        <div class="aui-jop-top-box">
+                            <form action="">
+                                <div class="aui-flex b-line">
+                                    <div class="aui-form-item">
+                                        <img th:src="@{/images/iphone.png}" alt="">
+                                    </div>
+                                    <div class="aui-flex-box">
+                                        <input type="text" name="userPhone" placeholder="请输入手机号码">
+                                    </div>
+                                </div>
+                                <div class="aui-flex b-line">
+                                    <div class="aui-form-item">
+                                        <img th:src="@{/images/psd.png}" alt="">
+                                    </div>
+                                    <div class="aui-flex-box">
+                                        <input type="text" name="userCode" placeholder="请输入验证码">
+                                    </div>
+                                    <div class="aui-psd">
+                                        <button id="yzm" onclick="yanzm()">获取验证码</button>
+                                    </div>
+                                </div>
+                                <div class="aui-form-button">
+                                    <button id="subBtn" onclick="login()" type="button">登录</button>
+                                </div>
+                                <p th:text="${err}" style="color: red;text-align: center"></p>
+                                <div class="aui-register aui-register-a">
+                                    <a href="javascript:;"></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </form>
+                <div class="aui-register">
+                    <a th:href="@{/login/regis}">注册账号</a>
+                    <a th:href="@{/login/regis}">短信验证登陆</a>
+                </div>
+            </section>
+            <footer class="aui-footer-link">
+                <a href="javascript:;" class="aui-tabBar-item aui-tabBar-item-active">登录即代表阅读并同意 <em>用户协议</em></a>
+            </footer>
+        </section>
+
+    </body>
+    <script th:src="@{/js/jquery.min.js}"></script>
+<script>
+        function yanzm(){
+            //验证手机号
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("[name=userPhone]").val()))
+            {
+                popup({type:'error',msg:"请输入有效的手机号码",delay:2000,bg:true,clickDomCancel:true});
+
+                return false;
+            } //
+            //验证是否注册过
+            $.getJSON("/login/phoneIf",{"phone":$("[name=userPhone]").val()},function (data) {
+                if (data=="1"){//如果有账号
+                    //生成随机数
+                    var arr = "";//容器
+                    for(var i =0;i<6;i++){//循环六次
+                        var num = Math.random()*9;//Math.random();每次生成(0-1)之间的数;
+                        num = parseInt(num,10);
+                        arr+=num;
+                    }
+                    $.getJSON("/login/coadUser",{"phone":$("[name=userPhone]").val(),"coad":arr},function(data){
+                        if(data=="1"){
+                            popup({type:'success',msg:"发送成功",delay:1000,callBack:function(){
+                                    console.log('callBack~~~');
+                                }});
+                        }else{
+                            popup({type:'error',msg:"发送失败",delay:2000,bg:true,clickDomCancel:true});
+                        }
+                    })
+
+                }else{
+                    //
+                    $("[name=userPhone]").val("")
+                    popup({type:'error',msg:"电话还没注册哦快去注册吧",delay:2000,bg:true,clickDomCancel:true});
+                }
+            })
+        }
+
+
+
+        function yanzm()
+        {
+            //验证手机号
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("[name=userPhone]").val()))
+            {
+                popup({type:'error',msg:"请输入有效的手机号码",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            } //
+            //验证是否注册过
+            $.getJSON("/login/phoneIf",{"phone":$("[name=userPhone]").val()},function (data) {
+                if (data=="1"){//如果有账号
+                    //生成随机数
+                    var arr = "";//容器
+                    for(var i =0;i<6;i++){//循环六次
+                        var num = Math.random()*9;//Math.random();每次生成(0-1)之间的数;
+                        num = parseInt(num,10);
+                        arr+=num;
+                    }
+                    $.getJSON("/login/coadUser",{"phone":$("[name=userPhone]").val(),"coad":arr},function(data){
+                        if(data=="1"){
+                            popup({type:'success',msg:"发送成功",delay:1000,callBack:function(){
+                                    console.log('callBack~~~');
+                                }});
+
+                        }else{
+                            popup({type:'error',msg:"发送失败",delay:2000,bg:true,clickDomCancel:true});
+                        }
+                    })
+
+                }else{
+                    //
+                    $("[name=userPhone]").val("")
+                    popup({type:'error',msg:"电话还没注册哦快去注册吧",delay:2000,bg:true,clickDomCancel:true});
+                }
+            })
+            var obj = $('[id=yzm]');
+            settime(obj);
+        }
+
+
+        var countdown = 60;
+        function settime(obj)
+        {
+            if(countdown == 0) {
+                $("#yzm").attr("disabled", false);
+                obj.text('获取验证码');
+                countdown = 60;
+                return;
+            } else {
+                $("#yzm").attr("disabled", true);
+                obj.text("重新发送("+countdown+")");
+                countdown--;
+            }
+
+            setTimeout(function(){
+
+                settime(obj)
+
+            },1000)
+
+        }
+        function login(){
+            var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+            if(!myreg.test($("[name=userPhone]").val()))
+            {
+                popup({type:'error',msg:"请输入有效的手机号码",delay:2000,bg:true,clickDomCancel:true});
+                return false;
+            }
+            if ($("[name=userPhone]").val()==""){
+                popup({type:'error',msg:"手机号不得为空",delay:2000,bg:true,clickDomCancel:true});
+                return;
+            }
+            if ($("[ name=userCode]").val()==""){
+                popup({type:'error',msg:"验证码不得为空",delay:2000,bg:true,clickDomCancel:true});
+                return;
+            }
+
+            //登陆
+            $.getJSON("/login/userPhone",{"phone":$("[name=userPhone]").val(),"code":$("[ name=userCode]").val()},function(data){
+                if (data=="1"){
+                    popup({type:'success',msg:"登陆成功",delay:1000,callBack:function(){
+                            console.log('callBack~~~');
+                        }});
+                    location.href="/login/personalLoad";
+                } else if (data=="0") {
+                    popup({type:'error',msg:"登陆失败",delay:2000,bg:true,clickDomCancel:true});
+                }else{
+                    popup({type:'error',msg:"验证码错误",delay:2000,bg:true,clickDomCancel:true});
+                }
+            })
+        }
+</script>
+</html>
